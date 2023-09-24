@@ -1099,11 +1099,11 @@ h5 {
   --tw-shadow: var(--tw-shadow-colored);
 }
 
-.prose-headings\:font-varelaRound :is(:where(h1, h2, h3, h4, h5, h6, th):not(:where([class~="not-prose"] *))) {
+.prose-headings\:font-varelaRound :is(:where(h1, h2, h3, h4, h5, h6, th):not(:where([class~="not-prose"],[class~="not-prose"] *))) {
   font-family: 'Varela Round Regular', 'sans', 'serif';
 }
 
-.prose-a\:text-\[\#215578\] :is(:where(a):not(:where([class~="not-prose"] *))) {
+.prose-a\:text-\[\#215578\] :is(:where(a):not(:where([class~="not-prose"],[class~="not-prose"] *))) {
   --tw-text-opacity: 1;
   color: rgb(33 85 120 / var(--tw-text-opacity));
 }
