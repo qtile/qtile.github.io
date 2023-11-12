@@ -73,14 +73,14 @@ border-[#404040] hover:border-gray-600 lg:text-sm"><div class=highlight><pre tab
 </span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> i <span style=color:#f92672>in</span> groups:
 </span></span><span style=display:flex><span>    keys<span style=color:#f92672>.</span>extend(
 </span></span><span style=display:flex><span>        [
-</span></span><span style=display:flex><span>            <span style=color:#75715e># mod1 + letter of group = switch to group</span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e># mod1 + group number = switch to group</span>
 </span></span><span style=display:flex><span>            Key(
 </span></span><span style=display:flex><span>                [mod],
 </span></span><span style=display:flex><span>                i<span style=color:#f92672>.</span>name,
 </span></span><span style=display:flex><span>                lazy<span style=color:#f92672>.</span>group[i<span style=color:#f92672>.</span>name]<span style=color:#f92672>.</span>toscreen(),
 </span></span><span style=display:flex><span>                desc<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;Switch to group </span><span style=color:#e6db74>{}</span><span style=color:#e6db74>&#34;</span><span style=color:#f92672>.</span>format(i<span style=color:#f92672>.</span>name),
 </span></span><span style=display:flex><span>            ),
-</span></span><span style=display:flex><span>            <span style=color:#75715e># mod1 + shift + letter of group = switch to &amp; move focused window to group</span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e># mod1 + shift + group number = switch to &amp; move focused window to group</span>
 </span></span><span style=display:flex><span>            Key(
 </span></span><span style=display:flex><span>                [mod, <span style=color:#e6db74>&#34;shift&#34;</span>],
 </span></span><span style=display:flex><span>                i<span style=color:#f92672>.</span>name,
@@ -88,7 +88,7 @@ border-[#404040] hover:border-gray-600 lg:text-sm"><div class=highlight><pre tab
 </span></span><span style=display:flex><span>                desc<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;Switch to &amp; move focused window to group </span><span style=color:#e6db74>{}</span><span style=color:#e6db74>&#34;</span><span style=color:#f92672>.</span>format(i<span style=color:#f92672>.</span>name),
 </span></span><span style=display:flex><span>            ),
 </span></span><span style=display:flex><span>            <span style=color:#75715e># Or, use below if you prefer not to switch to that group.</span>
-</span></span><span style=display:flex><span>            <span style=color:#75715e># # mod1 + shift + letter of group = move focused window to group</span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e># # mod1 + shift + group number = move focused window to group</span>
 </span></span><span style=display:flex><span>            <span style=color:#75715e># Key([mod, &#34;shift&#34;], i.name, lazy.window.togroup(i.name),</span>
 </span></span><span style=display:flex><span>            <span style=color:#75715e>#     desc=&#34;move focused window to group {}&#34;.format(i.name)),</span>
 </span></span><span style=display:flex><span>        ]
