@@ -1,18 +1,18 @@
 <!doctype html><html lang=en><head><meta name=generator content="Hugo 0.111.3"><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Qtile</title><link rel=stylesheet href=/style.css><link rel=preload href=/fonts/varelaround-regular-webfont.woff2 as=font type=font/woff2 crossorigin></head></head><body class="prose-headings:font-varelaRound text-base lg:text-lg"><header><nav class="grid grid-flow-row justify-items-center items-center max-w-full p-4 lg:grid-flow-col
-bg-[#1B1B1B] text-[#F9F9F9] border-b border-b-[#404040] border-solid"><div class="mx-8 lg:mx-80 max-w-full h-fit grid grid-flow-row gap-2
+bg-[#1B1B1B] text-[#F9F9F9] border-b border-b-[#404040] border-solid"><div class="mx-8 lg:mx-50 max-w-full h-fit grid grid-flow-row gap-2
 justify-items-center items-center lg:grid-flow-col"><a href=/><img class="max-w-max rounded p-2 bg-[#215578]" src=/images/qtile-logo-white.webp alt="Logo of Qtile" height=48 width=64></a>
 <a class="p-1 rounded hover:bg-[#404040]" href=/screenshots/ title>Screenshots</a>
 <a class="p-1 rounded hover:bg-[#404040]" href=/videos/ title>Videos</a>
 <a class="p-1 rounded hover:bg-[#404040]" href=https://docs.qtile.org title>Documentation</a>
 <a class="p-1 rounded hover:bg-[#404040]" href=https://github.com/qtile/qtile/issues/ title>Issues</a>
 <a class="p-1 rounded hover:bg-[#404040]" href=https://github.com/qtile/qtile/ title>GitHub</a><div class="grid grid-flow-row justify-items-center items-center mx-8 w-full
-lg:mx-80"><div>Current release: <b>v0.23.0, Sept. 24, 2023</b></div><div class="grid grid-flow-row justify-items-center items-center
+lg:mx-50"><div>Current release: <b>v0.23.0, Sept. 24, 2023</b></div><div class="grid grid-flow-row justify-items-center items-center
 text-sm text-[#378ec8] lg:grid-flow-col"><a class="p-1 hover:text-[#5C9FCD]" href=/download/>Download</a>
 <a class="p-1 hover:text-[#5C9FCD]" href=https://github.com/qtile/qtile/blob/master/CHANGELOG>Release Notes</a>
 <a class="p-1 hover:text-[#5C9FCD]" href=http://docs.qtile.org/en/latest/manual/install/>Install Guide</a></div></div></div></nav></header><section class="grid grid-flow-row items-center justify-between
 bg-[#222222] max-w-full min-h-fit lg:p-4 lg:max-h-auto"><div class="mx-8 lg:mx-80 text-[#FDFDFE]"><picture><source srcset=/images/qtile-logo-white.webp type=image/webp><source srcset=/images/qtile-logo-white.png type=image/png><img class="py-4 my-4" src=/images/qtile-logo-white.png alt="Qtile logo"></picture><h5 class=font-varelaRound>A full-featured, hackable tiling window manager written and configured in Python</h5><div class="grid grid-flow-row lg:grid-flow-col gap-2 h-auto my-4"><img class="w-auto border rounded border-[#404040] hover:border-gray-600 lg:h-80" src=/images/qtile.png>
 <span class="text-xs h-80 px-2 w-auto overflow-y-auto border rounded
-border-[#404040] hover:border-gray-600 lg:text-sm"><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-py data-lang=py><span style=display:flex><span><span style=color:#f92672>from</span> libqtile <span style=color:#f92672>import</span> bar, layout, widget
+border-[#404040] hover:border-gray-600 lg:text-sm"><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-py data-lang=py><span style=display:flex><span><span style=color:#f92672>from</span> libqtile <span style=color:#f92672>import</span> bar, layout, qtile, widget
 </span></span><span style=display:flex><span><span style=color:#f92672>from</span> libqtile.config <span style=color:#f92672>import</span> Click, Drag, Group, Key, Match, Screen
 </span></span><span style=display:flex><span><span style=color:#f92672>from</span> libqtile.lazy <span style=color:#f92672>import</span> lazy
 </span></span><span style=display:flex><span><span style=color:#f92672>from</span> libqtile.utils <span style=color:#f92672>import</span> guess_terminal
@@ -67,6 +67,20 @@ border-[#404040] hover:border-gray-600 lg:text-sm"><div class=highlight><pre tab
 </span></span><span style=display:flex><span>    Key([mod, <span style=color:#e6db74>&#34;control&#34;</span>], <span style=color:#e6db74>&#34;q&#34;</span>, lazy<span style=color:#f92672>.</span>shutdown(), desc<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;Shutdown Qtile&#34;</span>),
 </span></span><span style=display:flex><span>    Key([mod], <span style=color:#e6db74>&#34;r&#34;</span>, lazy<span style=color:#f92672>.</span>spawncmd(), desc<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;Spawn a command using a prompt widget&#34;</span>),
 </span></span><span style=display:flex><span>]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Add key bindings to switch VTs in Wayland.</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># We can&#39;t check qtile.core.name in default config as it is loaded before qtile is started</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># We therefore defer the check until the key binding is run by using .when(func=...)</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> vt <span style=color:#f92672>in</span> range(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>8</span>):
+</span></span><span style=display:flex><span>    keys<span style=color:#f92672>.</span>append(
+</span></span><span style=display:flex><span>        Key(
+</span></span><span style=display:flex><span>            [<span style=color:#e6db74>&#34;control&#34;</span>, <span style=color:#e6db74>&#34;mod1&#34;</span>],
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;f</span><span style=color:#e6db74>{</span>vt<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>,
+</span></span><span style=display:flex><span>            lazy<span style=color:#f92672>.</span>core<span style=color:#f92672>.</span>change_vt(vt)<span style=color:#f92672>.</span>when(func<span style=color:#f92672>=</span><span style=color:#66d9ef>lambda</span>: qtile<span style=color:#f92672>.</span>core<span style=color:#f92672>.</span>name <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;wayland&#34;</span>),
+</span></span><span style=display:flex><span>            desc<span style=color:#f92672>=</span><span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;Switch to VT</span><span style=color:#e6db74>{</span>vt<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>,
+</span></span><span style=display:flex><span>        )
+</span></span><span style=display:flex><span>    )
+</span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>groups <span style=color:#f92672>=</span> [Group(i) <span style=color:#66d9ef>for</span> i <span style=color:#f92672>in</span> <span style=color:#e6db74>&#34;123456789&#34;</span>]
 </span></span><span style=display:flex><span>
