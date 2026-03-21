@@ -1,3 +1,4 @@
+    Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
     # Grow windows. If current window is on the edge of screen and direction
     # will be to screen edge - window would shrink.
     Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
@@ -130,6 +131,16 @@ screens = [
         # x11_drag_polling_rate = 60,
     ),
 ]
+
+# Instead of screens, you can define a function here to specify which Screen
+# should correspond to which Output.
+fake_screens: list[Screen] | None = None
+
+# Instead of screens or fake screens, you can define a function here that
+# returns a list of Screen objects based on the list of Outputs; that way you
+# can decide based on e.g. the number of screens, or which ports are plugged
+# in exactly what do render in each bar for each screen.
+generate_screens: Callable[[list[Output]], list[Screen]] | None = None
 
 # Drag floating layouts.
 mouse = [
